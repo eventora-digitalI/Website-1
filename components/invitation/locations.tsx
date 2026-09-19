@@ -1,4 +1,4 @@
-import { FeluccaSketch, NubianDivider } from './ornaments'
+import { NubianDivider } from './ornaments'
 
 const LOCATIONS = [
   {
@@ -32,7 +32,6 @@ export function Locations() {
             key={loc.name}
             className={`reveal ${i === 0 ? 'reveal-d2' : 'reveal-d3'} paper-card paper-grain deckle relative flex flex-col overflow-hidden p-7 md:p-9`}
           >
-            <FeluccaSketch className="pointer-events-none absolute -top-2 -left-4 w-36 text-ink opacity-25" />
 
             <span className="relative inline-block self-start rounded-full border border-wax/35 bg-wax/10 px-3 py-1 font-sans text-[0.68rem] text-wax-deep">
               {loc.tag}

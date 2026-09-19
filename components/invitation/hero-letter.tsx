@@ -1,19 +1,10 @@
-import { FeluccaSketch, NubianDivider, WaxSealMark } from './ornaments'
+import { NubianDivider, WaxSealMark } from './ornaments'
 
 export function HeroLetter() {
   return (
     <section id="hero" className="relative flex min-h-svh items-center justify-center px-4 py-16">
       <div className="letter-rise paper-card paper-grain deckle relative w-full max-w-3xl overflow-hidden px-6 py-12 md:px-14 md:py-16">
-        {/* Nubian corner patterns like the envelope */}
-        <div className="pointer-events-none absolute -top-1 -left-1 w-32 overflow-hidden opacity-80 md:w-44" style={{ transform: 'rotate(180deg)' }}>
-          <img src="/images/nubian-pattern-band.png" alt="" className="block h-8 w-full object-cover md:h-11" />
-        </div>
-        <div className="pointer-events-none absolute -right-1 -bottom-1 w-32 overflow-hidden opacity-80 md:w-44">
-          <img src="/images/nubian-pattern-band.png" alt="" className="block h-8 w-full object-cover md:h-11" />
-        </div>
 
-        {/* Felucca ink sketch */}
-        <FeluccaSketch className="pointer-events-none absolute bottom-4 left-4 w-32 text-ink opacity-45 md:w-44" />
 
         <div className="relative flex flex-col items-center text-center">
           <p className="font-sans text-xs font-light tracking-[0.3em] text-ink/70">دعوة زفاف</p>
