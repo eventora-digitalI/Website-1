@@ -1389,9 +1389,8 @@
 
     <div id="progress-bar"></div>
     <canvas id="stars-canvas"></canvas>
-    <!-- AUDIO -->
     <audio id="wedding-audio" loop preload="auto">
-      <source src="عوضيه عذاب-العريس مرق.mp3" type="audio/mpeg" />
+      <source src="/music.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- MUSIC BUTTON -->
@@ -2330,6 +2329,7 @@
         const btn = document.getElementById("music-btn");
         const iconPlay = document.getElementById("icon-play");
         const iconPause = document.getElementById("icon-pause");
+        const isIframe = window.self !== window.top;
 
         function setPlaying(playing) {
           if (playing) {
@@ -2345,40 +2345,49 @@
           }
         }
 
-        // Listen for postMessage from parent frame to start music
-        (function () {
-          window.addEventListener('message', function (e) {
-            if (e.data === 'start-music') {
-              audio.volume = 0.75;
-              audio.muted = false;
-              audio.play()
-                .then(function() { setPlaying(true); })
-                .catch(function() { setPlaying(false); });
-            }
-          });
-        })();
-
         // Toggle play/pause button
         btn.addEventListener("click", function (e) {
           e.stopPropagation();
-          if (audio.paused) {
-            audio
-              .play()
-              .then(() => setPlaying(true))
-              .catch(() => {});
+          if (isIframe) {
+            window.parent.postMessage({ type: 'toggle-music' }, '*');
           } else {
-            audio.pause();
-            setPlaying(false);
+            if (audio.paused) {
+              audio.play().then(() => setPlaying(true)).catch(() => {});
+            } else {
+              audio.pause();
+              setPlaying(false);
+            }
           }
         });
+
+        // Listen for messages from parent frame
+        window.addEventListener('message', function (e) {
+          if (!e.data) return;
+          if (e.data.type === 'music-state') {
+            setPlaying(e.data.playing);
+          } else if (e.data === 'start-music') {
+            if (isIframe) {
+              window.parent.postMessage({ type: 'start-music' }, '*');
+            } else {
+              audio.play().then(() => setPlaying(true)).catch(() => {});
+            }
+          }
+        });
+
+        // Query parent for initial music state
+        if (isIframe) {
+          window.parent.postMessage({ type: 'get-music-state' }, '*');
+        }
 
         // Restart song from beginning when language is switched
         document
           .querySelectorAll("[data-lang-button]")
           .forEach(function (langBtn) {
             langBtn.addEventListener("click", function () {
-              audio.currentTime = 0;
-              if (!audio.paused) setPlaying(true);
+              if (!isIframe) {
+                audio.currentTime = 0;
+                if (!audio.paused) setPlaying(true);
+              }
             });
           });
       })();

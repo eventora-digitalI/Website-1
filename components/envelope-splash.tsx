@@ -11,14 +11,21 @@ const EMBERS = [
   { left: '45%', bottom: '12%', duration: '13s', delay: '5.8s' },
 ]
 
-export function EnvelopeSplash({ onOpen }: { onOpen: () => void }) {
+export function EnvelopeSplash({
+  onOpen,
+  onStartOpen,
+}: {
+  onOpen: () => void
+  onStartOpen?: () => void
+}) {
   const [opening, setOpening] = useState(false)
 
   const handleOpen = useCallback(() => {
     if (opening) return
     setOpening(true)
+    onStartOpen?.()
     window.setTimeout(onOpen, 1050)
-  }, [opening, onOpen])
+  }, [opening, onOpen, onStartOpen])
 
   return (
     <div
