@@ -6,12 +6,14 @@ const LOCATIONS = [
     name: 'قاعة ألف ليلة وليلة (The Nile Ritz-Carlton)',
     address: 'فندق النيل ريتز كارلتون — ميدان التحرير، كورنيش النيل، القاهرة، مصر',
     href: 'https://maps.google.com/?q=The+Nile+Ritz-Carlton+Cairo',
+    image: '/images/nile-ritz.webp',
   },
   {
     tag: 'كتب الكتاب · ٢٣ أكتوبر',
     name: 'مسجد الشرطة',
     address: 'مسجد الشرطة — المحور المركزي، الشيخ زايد، الجيزة، مصر',
     href: 'https://maps.google.com/?q=Police+Mosque+Sheikh+Zayed',
+    image: '/images/police-mosque.webp',
   },
 ]
 
@@ -32,6 +34,13 @@ export function Locations() {
             key={loc.name}
             className={`reveal ${i === 0 ? 'reveal-d2' : 'reveal-d3'} paper-card paper-grain deckle relative flex flex-col overflow-hidden p-7 md:p-9`}
           >
+            <div className="relative mb-5 -mx-7 -mt-7 h-48 overflow-hidden md:-mx-9 md:-mt-9">
+              <img
+                src={loc.image}
+                alt={loc.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
 
             <span className="relative inline-block self-start rounded-full border border-wax/35 bg-wax/10 px-3 py-1 font-sans text-[0.68rem] text-wax-deep">
               {loc.tag}
